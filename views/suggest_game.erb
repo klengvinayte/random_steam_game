@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Random game</title>
+  <link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body>
+<div class="wrapper">
+  <h1><%= human_title(@game_name) %></h1>
+  <a href="<%= game_url(@game_id) %>">
+    <img src="<%= game_header_url(@game_id) %>" alt="<%= @game_name %>">
+  </a>
+  <div>
+    <p>You have played this game for:</p>
+    <p><%= human_playtime(@game_playtime) %></p>
+  </div>
+  <div>
+    <a href="">One more time!</a>
+  </div>
+</div>
+</body>
+</html>

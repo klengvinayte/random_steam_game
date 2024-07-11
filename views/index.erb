@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Random Steam Game</title>
+  <link rel="stylesheet" type="text/css" href="/style.css">
+</head>
+<body>
+<div class="wrapper">
+  <h1>Enter player's Steam nickname:</h1>
+  <div>
+    <form action="/suggest_game" method="get">
+      <input type="text" name="name" value="<%= params[:name] %>">
+      <input type="submit" value="Hit me!">
+    </form>
+  </div>
+  <% unless @error.nil? %>
+    <div class="error"><%= @error %></div>
+  <% end %>
+</div>
+</body>
+</html>
