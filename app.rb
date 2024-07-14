@@ -24,15 +24,26 @@ class SteamApp < Sinatra::Base
 
     Steam.apikey = ENV['STEAM_API_KEY']
 
-    steam_id = Steam::User.vanity_to_steamid(vanityurl)
+    begin
+      steam_id = Steam::User.vanity_to_steamid(vanityurl)
 
-    games = Steam::Player.owned_games(steam_id, params: { include_appinfo: 1 })
-    random_game = games['games'].sample
+      games = Steam::Player.owned_games(steam_id, params: { include_appinfo: 1 })
 
-    @game_id = random_game['appid']
-    @game_playtime = random_game['playtime_forever']
-    @game_name = random_game['name']
+      if games['games'].nil? || games['games'].empty?
+        @error = "No games found for the specified Steam ID."
+        return erb :error
+      end
 
-    erb :suggest_game
+      random_game = games['games'].sample
+
+      @game_id = random_game['appid']
+      @game_playtime = random_game['playtime_forever']
+      @game_name = random_game['name']
+
+      erb :suggest_game
+    rescue Steam::Error => e
+      @error = "An error occurred: #{e.message}"
+      erb :error
+    end
   end
 end
